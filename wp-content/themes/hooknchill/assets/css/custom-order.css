@@ -1,0 +1,30 @@
+.custom-order-page { width: min(1160px, calc(100% - 48px)); margin: 76px auto 100px; }
+.custom-order-intro { max-width: 710px; margin-bottom: 48px; }
+.custom-order-intro h1 { margin-bottom: 18px; font: 600 clamp(42px, 6vw, 66px)/1.04 var(--serif); }
+.custom-order-intro > p:last-child { max-width: 610px; color: var(--muted); }
+.custom-order-layout { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(250px, .75fr); align-items: start; gap: 56px; }
+.custom-order-form-section > h2 { margin-bottom: 24px; font: 600 28px/1.1 var(--serif); }
+.custom-order-form { padding: 30px; border: 1px solid var(--line); background: var(--paper); }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 16px; }
+.form-field { display: flex; min-width: 0; flex-direction: column; gap: 7px; }
+.form-field-wide { grid-column: 1 / -1; }
+.form-field label { font-size: 12px; font-weight: 700; }
+.form-field input, .form-field select, .form-field textarea { width: 100%; min-height: 46px; padding: 11px 12px; border: 1px solid rgba(59,42,34,.24); border-radius: 0; outline: none; background: white; color: var(--ink); font-size: 13px; }
+.form-field textarea { min-height: 130px; resize: vertical; }
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--terracotta); box-shadow: 0 0 0 2px rgba(200,104,79,.14); }
+.form-field input[type=file] { min-height: auto; padding: 10px; }
+.field-hint, .privacy-note { color: var(--muted); font-size: 11px; }
+.privacy-note { margin: 20px 0; }
+.form-notice { margin: 0 0 20px; padding: 14px 16px; font-size: 13px; }
+.form-notice-success { border-left: 3px solid var(--sage-dark); background: #edf1e8; }
+.form-notice-error { border-left: 3px solid var(--terracotta-dark); background: #f8e8e2; }
+.form-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.custom-order-aside { position: sticky; top: 24px; padding: 28px; background: var(--cream); }
+.aside-mark { display: inline-block; margin-bottom: 18px; color: var(--terracotta); font-size: 30px; }
+.custom-order-aside h2 { margin-bottom: 22px; font: 600 30px/1.08 var(--serif); }
+.custom-order-aside ol { display: grid; gap: 18px; margin: 0; padding-left: 20px; color: var(--muted); font-size: 12px; }
+.custom-order-aside li { padding-left: 5px; }
+.custom-order-aside li::marker { color: var(--terracotta-dark); font-weight: 700; }
+.aside-footnote { margin: 26px 0 0; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+@media (max-width: 760px) { .custom-order-page { width: calc(100% - 40px); margin: 54px auto 70px; } .custom-order-layout { grid-template-columns: 1fr; gap: 28px; } .custom-order-form { padding: 22px 18px; } .custom-order-aside { position: static; } }
+@media (max-width: 480px) { .form-grid { grid-template-columns: 1fr; } .form-field-wide { grid-column: auto; } .custom-order-intro h1 { font-size: 44px; } }
