@@ -1,0 +1,14 @@
+wp-config.php
+constants.php
+backup-sqlite/
+wp-config.php
+constants.php
+backup-sqlite/
+wp-content/themes/hooknchill/backups/
+wp-content/debug.log*
+# File konfigurasi lokal dan database
+wp-config.php
+wp-content/db.php
+wp-content/db.php.backup*
+wp-content/database/
+database/

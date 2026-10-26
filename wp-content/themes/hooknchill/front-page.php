@@ -1,0 +1,37 @@
+<?php
+get_header();
+$shop_url   = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/koleksi/' );
+$products   = function_exists( 'wc_get_products' ) ? wc_get_products( array( 'limit' => 4, 'status' => 'publish', 'orderby' => 'date', 'order' => 'DESC' ) ) : array();
+$categories = function_exists( 'get_terms' ) ? get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => true, 'number' => 4, 'parent' => 0 ) ) : array();
+if ( is_wp_error( $categories ) ) {
+	$categories = array();
+}
+$category_colors    = array( 'category-terracotta', 'category-sage', 'category-yellow', 'category-rose' );
+$category_fallbacks = array( __( 'Tas selempang', 'hooknchill' ), __( 'Amigurumi', 'hooknchill' ), __( 'Dompet rajut', 'hooknchill' ), __( 'Tempat laptop', 'hooknchill' ) );
+?>
+<main id="main-content">
+	<section class="hero-section">
+		<div class="hero-copy"><p class="eyebrow"><span class="eyebrow-line"></span><?php esc_html_e( 'Rajutan handmade, dibuat dengan hati', 'hooknchill' ); ?></p><h1><?php esc_html_e( 'Teman kecil untuk hari-hari yang besar.', 'hooknchill' ); ?></h1><p class="hero-description"><?php esc_html_e( 'Tas, amigurumi, dan karya rajut yang dibuat satu per satu. Pilih warna favoritmu atau ceritakan ide custom-mu.', 'hooknchill' ); ?></p><div class="hero-actions"><a class="button button-primary" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Jelajahi koleksi', 'hooknchill' ); ?><span aria-hidden="true">↗</span></a><a class="text-link" href="<?php echo esc_url( home_url( '/pesan-custom/' ) ); ?>"><?php esc_html_e( 'Buat pesanan custom', 'hooknchill' ); ?><span aria-hidden="true">→</span></a></div><div class="hero-proof"><span class="proof-mark" aria-hidden="true">✳</span><span><?php esc_html_e( 'Dirajut perlahan, khusus untukmu', 'hooknchill' ); ?></span></div></div>
+		<div class="hero-art" aria-label="<?php esc_attr_e( 'Pilihan rajutan Hooknchill', 'hooknchill' ); ?>"><div class="hero-sun" aria-hidden="true"></div><div class="hero-image-wrap"><?php if ( ! empty( $products ) && $products[0]->get_image_id() ) : ?><?php echo wp_kses_post( $products[0]->get_image( 'large', array( 'class' => 'hero-product-image' ) ) ); ?><?php else : ?><div class="sample-knit" role="img" aria-label="<?php esc_attr_e( 'Contoh tas rajut warna terracotta', 'hooknchill' ); ?>"><span class="sample-knit-handle"></span><span class="sample-knit-body"></span><span class="sample-knit-tag">h.</span></div><?php endif; ?></div><div class="hero-note"><span class="note-star" aria-hidden="true">✳</span><span><?php esc_html_e( 'small batch', 'hooknchill' ); ?><br><?php esc_html_e( 'big heart', 'hooknchill' ); ?></span></div><div class="hero-caption"><?php esc_html_e( 'Karya dibuat satu per satu', 'hooknchill' ); ?></div></div>
+	</section>
+
+	<section class="category-section section-shell" aria-labelledby="category-title"><div class="section-heading"><div><p class="eyebrow"><?php esc_html_e( 'Pilih yang kamu suka', 'hooknchill' ); ?></p><h2 id="category-title"><?php esc_html_e( 'Dari benang, jadi kesayangan.', 'hooknchill' ); ?></h2></div><a class="text-link" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Semua koleksi', 'hooknchill' ); ?><span aria-hidden="true">→</span></a></div>
+		<div class="category-grid">
+		<?php if ( ! empty( $categories ) ) : ?>
+			<?php foreach ( array_slice( $categories, 0, 4 ) as $index => $category ) : $thumbnail_id = get_term_meta( $category->term_id, 'thumbnail_id', true ); ?>
+				<a class="category-tile <?php echo esc_attr( $category_colors[ $index % 4 ] ); ?>" href="<?php echo esc_url( get_term_link( $category ) ); ?>"><?php if ( $thumbnail_id ) : ?><span class="category-photo"><?php echo wp_get_attachment_image( $thumbnail_id, 'medium' ); ?></span><?php else : ?><span class="category-symbol" aria-hidden="true"><?php echo esc_html( array( '◌', '✿', '▱', '⌑' )[ $index % 4 ] ); ?></span><?php endif; ?><span class="category-name"><?php echo esc_html( $category->name ); ?></span><span class="category-arrow" aria-hidden="true">↗</span></a>
+			<?php endforeach; ?>
+		<?php else : ?>
+			<?php foreach ( $category_fallbacks as $index => $category_name ) : ?><a class="category-tile <?php echo esc_attr( $category_colors[ $index ] ); ?>" href="<?php echo esc_url( $shop_url ); ?>"><span class="category-symbol" aria-hidden="true"><?php echo esc_html( array( '◌', '✿', '▱', '⌑' )[ $index ] ); ?></span><span class="category-name"><?php echo esc_html( $category_name ); ?></span><span class="category-arrow" aria-hidden="true">↗</span></a><?php endforeach; ?>
+		<?php endif; ?>
+		</div>
+	</section>
+
+	<section class="products-section"><div class="section-shell"><div class="section-heading"><div><p class="eyebrow"><?php esc_html_e( 'Baru dari meja rajut', 'hooknchill' ); ?></p><h2><?php esc_html_e( 'Karya yang siap jadi milikmu.', 'hooknchill' ); ?></h2></div><a class="text-link" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Lihat semua', 'hooknchill' ); ?><span aria-hidden="true">→</span></a></div>
+		<?php if ( ! empty( $products ) ) : ?><div class="product-grid"><?php foreach ( $products as $product ) : ?><article class="product-card"><a class="product-image" href="<?php echo esc_url( $product->get_permalink() ); ?>"><?php echo wp_kses_post( $product->get_image( 'woocommerce_thumbnail' ) ); ?><?php if ( $product->is_on_sale() ) : ?><span class="product-badge"><?php esc_html_e( 'Harga spesial', 'hooknchill' ); ?></span><?php endif; ?></a><div class="product-meta"><a class="product-title" href="<?php echo esc_url( $product->get_permalink() ); ?>"><?php echo esc_html( $product->get_name() ); ?></a><span class="product-price"><?php echo wp_kses_post( $product->get_price_html() ); ?></span></div><a class="product-view" href="<?php echo esc_url( $product->get_permalink() ); ?>"><?php esc_html_e( 'Lihat detail', 'hooknchill' ); ?><span aria-hidden="true">↗</span></a></article><?php endforeach; ?></div><?php else : ?><div class="empty-products"><span class="empty-mark" aria-hidden="true">✳</span><p><?php esc_html_e( 'Koleksi baru sedang disiapkan.', 'hooknchill' ); ?></p><a class="text-link" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Kunjungi koleksi', 'hooknchill' ); ?><span aria-hidden="true">→</span></a></div><?php endif; ?>
+	</div></section>
+
+	<section class="brand-band"><div class="brand-band-inner"><span class="band-flower" aria-hidden="true">✿</span><div><p class="eyebrow"><?php esc_html_e( 'Bukan sekadar rajutan', 'hooknchill' ); ?></p><h2><?php esc_html_e( 'Ada cerita di setiap simpulnya.', 'hooknchill' ); ?></h2><p><?php esc_html_e( 'Setiap karya dibuat dengan tangan, perhatian, dan ruang untuk jadi milikmu sepenuhnya.', 'hooknchill' ); ?></p></div><a class="button button-light" href="<?php echo esc_url( home_url( '/cerita-kami/' ) ); ?>"><?php esc_html_e( 'Kenali Hooknchill', 'hooknchill' ); ?><span aria-hidden="true">↗</span></a></div></section>
+	<section class="custom-cta section-shell"><div class="cta-doodle" aria-hidden="true">〰</div><div><p class="eyebrow"><?php esc_html_e( 'Punya ide sendiri?', 'hooknchill' ); ?></p><h2><?php esc_html_e( 'Ceritakan, nanti kita rajut bersama.', 'hooknchill' ); ?></h2></div><a class="button button-primary" href="<?php echo esc_url( home_url( '/pesan-custom/' ) ); ?>"><?php esc_html_e( 'Mulai pesanan custom', 'hooknchill' ); ?><span aria-hidden="true">↗</span></a></section>
+</main>
+<?php get_footer(); ?>
